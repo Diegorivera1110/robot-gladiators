@@ -33,8 +33,16 @@ var fightOrSkip = function() {
 
 
 var fight = function(enemy) {
+// keep track of who goes first
+  var isPlayerTurn = true; 
+
+  // randomly change turn order
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
   
   while (playerInfo.health > 0 && enemy.health > 0) {
+    if (isPlayerTurn) {
     // ask player if they'd like to fight or run
     if (fightOrSkip()) {
       // if true, leave fight by breaking loop
@@ -43,7 +51,7 @@ var fight = function(enemy) {
 
     // generate randome damage value based on player's attack power
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-
+    // remove enemy's health by subtracting the amount we set in the damage variable
     enemy.health = Math.max(0, enemy.health - damage);
 
     console.log(
@@ -79,8 +87,10 @@ var fight = function(enemy) {
       break;
     } else {
       window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
+      }
     }
-  } // end of while loop
+    isPlayerTurn = !isPlayerTurn;
+  } // end of while loop 
 }; // end of fight function
 
 
